@@ -1,5 +1,4 @@
 import '../pages/index.css';
-import { initialCards } from "./cards.js";
 import { enableValidation } from "./validation.js";
 import { createCard } from "./card.js";
 import { openModal, closeModal } from "./modal.js";
@@ -75,10 +74,6 @@ cardAddButton.addEventListener("click", openCardAddPopup);
 
 profileFormElement.addEventListener("submit", handleProfileFormSubmit);
 cardFormElement.addEventListener("submit", handleCardFormSubmit);
-
-initialCards.forEach((card) => {
-	placesList.append(createCard(card.name, card.link));
-});
 
 popups.forEach((popup) => {
 	popup.classList.add("popup_is-animated");
