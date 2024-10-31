@@ -1,4 +1,27 @@
-import { config } from "./config";
+const config = {
+  baseUrl: '',
+  headers: {
+    authorization: '',
+    'Content-Type': 'application/json'
+  }
+}
+
+export const login = (groupUrl, token) => {
+  return fetch(`${groupUrl}/users/me`, {
+    method: "GET",
+    headers: {
+      authorization: token
+    }
+  })
+  .then(res => {
+    if (res.ok) {
+      config.baseUrl = groupUrl;
+      config.headers.authorization = token;
+      return Promise.resolve(`Успешно: ${res.status}`);
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
+}
 
 export const getUser = () => {
   return fetch(`${config.baseUrl}/users/me`, {

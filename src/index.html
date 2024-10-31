@@ -38,14 +38,13 @@
         © 2024 Mesto Russia
       </p>
     </footer>
-    <div class="popup popup_type_login">
+    <div class="popup popup_type_login popup_is-opened">
       <div class="popup__content">
-        <button type="button" class="popup__close"></button>
         <h3 class="popup__title">Вход в аккаунт</h3>
         <form class="popup__form" name="login">
-          <input type="text" name="group" id="input-group" class="popup__input popup__input_type_group" placeholder="Группа" required>
+          <input type="text" name="group" id="input-group" class="popup__input popup__input_type_group" placeholder="Ссылка на группу" required>
           <span class="popup__error input-group-error"></span>
-          <input type="text" name="token" id="input-token" class="popup__input popup__input_type_token" placeholder="Токен">
+          <input type="text" name="token" id="input-token" class="popup__input popup__input_type_token" placeholder="Токен" required>
           <span class="popup__error input-token-error"></span>
           <button type="submit" class="button popup__button">Войти</button>
         </form>

@@ -1,6 +1,10 @@
+import { loginPopup } from "./index";
+
 function openModal(popup) {
 	popup.classList.add("popup_is-opened");
-  document.addEventListener("keydown", closeByEsc);
+	if(popup !== loginPopup) {
+		document.addEventListener("keydown", closeByEsc);
+	}
 }
 
 function closeModal(popup) {
