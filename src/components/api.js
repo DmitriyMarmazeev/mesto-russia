@@ -9,8 +9,8 @@ export const getUser = () => {
     if (res.ok) {
       return res.json();
     }
-  })
-  .catch(res => Promise.reject(`Ошибка: ${res.status}`));
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
 export const getInitialCards = () => {
@@ -22,8 +22,8 @@ export const getInitialCards = () => {
       if (res.ok) {
         return res.json();
       }
-    })
-    .catch(res => Promise.reject(`Ошибка: ${res.status}`));
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
 }
 
 export const editProfile = (newName, newDescription) => {
@@ -39,8 +39,8 @@ export const editProfile = (newName, newDescription) => {
     if (res.ok) {
       return res.json();
     }
-  })
-  .catch(res => Promise.reject(`Ошибка: ${res.status}`));;
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
 export const addCard = (title, link) => {
@@ -56,8 +56,8 @@ export const addCard = (title, link) => {
     if (res.ok) {
       return res.json();
     }
-  })
-  .catch(res => Promise.reject(`Ошибка: ${res.status}`));;
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
 export const deleteCard = (id) => {
@@ -65,8 +65,12 @@ export const deleteCard = (id) => {
     method: 'DELETE',
     headers: config.headers
   })
-  .then(res => Promise.resolve(`Успешно: ${res.status}`))
-  .catch(res => Promise.reject(`Ошибка: ${res.status}`));
+  .then(res => {
+    if(res.ok){
+      Promise.resolve(`Успешно: ${res.status}`);
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
 export const putLike = (id) => {
@@ -78,8 +82,8 @@ export const putLike = (id) => {
     if (res.ok) {
       return res.json();
     }
-  })
-  .catch(res => Promise.reject(`Ошибка: ${res.status}`));
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
 
 export const deleteLike = (id) => {
@@ -91,6 +95,6 @@ export const deleteLike = (id) => {
     if (res.ok) {
       return res.json();
     }
-  })
-  .catch(res => Promise.reject(`Ошибка: ${res.status}`));
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
 }
