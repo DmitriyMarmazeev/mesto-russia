@@ -4,10 +4,13 @@
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
+  border: none;
+  cursor: pointer;
   background-image: url('../../../images/avatar.jpg');
   background-size: cover;
   background-position: center;
   margin: 0 29px 0 0;
+  padding: 0;
 }
 
 @media screen and (max-width: 740px) {
@@ -20,4 +23,8 @@
   .profile__image {
     margin-right: 0;
   }
+}
+
+.profile__image:hover .profile__image-edit-background {
+  opacity: 1;
 }
