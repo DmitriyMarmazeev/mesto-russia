@@ -2,9 +2,10 @@ import '../pages/index.css';
 import { enableValidation } from "./validation.js";
 import { createCard } from "./card.js";
 import { openModal, closeModal } from "./modal.js";
+import { getInitialCards } from './api.js';
 
 const cardTemplate = document.querySelector("#card-template").content;
-const placesList = document.querySelector(".places__list");
+export const placesList = document.querySelector(".places__list");
 const popups = document.querySelectorAll(".popup");
 const popupCloseButtons = document.querySelectorAll(".popup__close");
 
@@ -88,5 +89,14 @@ popups.forEach((popup) => {
 popupCloseButtons.forEach(closeButton => {
   closeButton.addEventListener("click", () => closeModal(closeButton.closest(".popup")));
 });
+
+Promise.resolve(
+	getInitialCards()
+).then(initialCards => {
+	console.log(initialCards);
+	initialCards.forEach(card => {
+		placesList.prepend(createCard(card.name, card.link, card.likes.length));
+	});
+})
 
 export { cardTemplate, imagePopupElement, popupImage, popupCaption };
