@@ -9,6 +9,11 @@ const placesList = document.querySelector(".places__list");
 const popups = document.querySelectorAll(".popup");
 const popupCloseButtons = document.querySelectorAll(".popup__close");
 
+const profileImage = document.querySelector(".profile__image");
+const avatarPopup = document.querySelector(".popup_type_avatar");
+const avatarFormElement = avatarPopup.querySelector(".popup__form");
+const avatarLinkInput = avatarPopup.querySelector(".popup__input_type_avatar-link");
+
 const profilePopup = document.querySelector(".popup_type_edit");
 const profileEditButton = document.querySelector(".profile__edit-button");
 const profileFormElement = profilePopup.querySelector(".popup__form");
@@ -38,6 +43,29 @@ const validationSettings = {
 
 enableValidation(validationSettings);
 
+function openAvatarPopup() {
+	avatarLinkInput.value = profileImage.style.backgroundImage.slice(5, -2);
+
+	openModal(avatarPopup);
+}
+
+function handleAvatarFormSubmit(evt) {
+	evt.preventDefault();
+	const popupButton = evt.target.querySelector(".popup__button");
+	const avatarLink = avatarLinkInput.value;
+	popupButton.textContent = "Сохранение...";
+
+	api.editAvatar(avatarLink)
+	.then(() => {
+		profileImage.style.backgroundImage = `url(${avatarLink})`;
+		closeModal(avatarPopup);
+	})
+	.catch(err => alert(err))
+	.finally(() => {
+		popupButton.textContent = "Сохранить";
+	});
+}
+
 function openProfilePopup() {
 	nameInput.value = profileTitle.textContent;
 	descriptionInput.value = profileDescription.textContent;
@@ -47,7 +75,8 @@ function openProfilePopup() {
 
 function handleProfileFormSubmit(evt) {
 	evt.preventDefault();
-	evt.target.textContent = "Сохранение...";
+	const popupButton = evt.target.querySelector(".popup__button");
+	popupButton.textContent = "Сохранение...";
 
 	api.editProfile(nameInput.value, descriptionInput.value)
 	.then((user) => {
@@ -57,7 +86,7 @@ function handleProfileFormSubmit(evt) {
 	})
 	.catch(err => alert(err))
 	.finally(() => {
-		evt.target.textContent = "Сохранить";
+		popupButton.textContent = "Сохранить";
 	});
 }
 
@@ -69,7 +98,8 @@ function openCardAddPopup() {
 
 function handleCardFormSubmit(evt) {
 	evt.preventDefault();
-	evt.target.textContent = "Создание...";
+	const popupButton = evt.target.querySelector(".popup__button");
+	popupButton.textContent = "Создание...";
 
 	api.addCard(cardPopupInputName.value, cardPopupInputImageURL.value)
 	.then(card => {
@@ -78,14 +108,15 @@ function handleCardFormSubmit(evt) {
 	})
 	.catch(err => alert(err))
 	.finally(() => {
-		evt.target.textContent = "Создать";
+		popupButton.textContent = "Создать";
 	});
 }
 
+profileImage.addEventListener("click", openAvatarPopup);
+avatarFormElement.addEventListener("submit", handleAvatarFormSubmit);
 profileEditButton.addEventListener("click", openProfilePopup);
-cardAddButton.addEventListener("click", openCardAddPopup);
-
 profileFormElement.addEventListener("submit", handleProfileFormSubmit);
+cardAddButton.addEventListener("click", openCardAddPopup);
 cardFormElement.addEventListener("submit", handleCardFormSubmit);
 
 popups.forEach((popup) => {
@@ -106,14 +137,20 @@ api.getInitialCards()
 .then(initialCards => {
 	api.getUser()
 	.then(user => {
-		profileTitle.textContent = user.name;
-		profileDescription.textContent = user.about;
 
-		initialCards.forEach(card => {
-			placesList.append(createCard(card.name, card.link, card._id, card.owner.name, user.name, card.likes));
-		});
 	})
 	.catch(err => alert(err));
+})
+.catch(err => alert(err));
+
+Promise.all([api.getInitialCards(), api.getUser()])
+.then(([initialCards, user]) => {
+	profileTitle.textContent = user.name;
+	profileDescription.textContent = user.about;
+	profileImage.style.backgroundImage = `url(${user.avatar})`;
+	initialCards.forEach(card => {
+		placesList.append(createCard(card.name, card.link, card._id, card.owner.name, user.name, card.likes));
+	});
 })
 .catch(err => alert(err));
 

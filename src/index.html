@@ -16,15 +16,15 @@
     </header>
     <main class="content">
       <section class="profile page__section">
-        <button class="profile__image" type="button">
+        <button class="profile__image">
           <div class="profile__image-edit-background">
             <img class="profile__image-edit-icon" src="<%=require('./images/edit-icon.svg')%>" alt="Редактировать">
           </div>
         </button>
         <div class="profile__info">
-          <h1 class="profile__title">Жак-Ив Кусто</h1>
+          <h1 class="profile__title"></h1>
           <button class="profile__edit-button" type="button"></button>
-          <p class="profile__description">Исследователь океана</p>
+          <p class="profile__description"></p>
         </div>
         <button class="profile__add-button" type="button"></button>
       </section>
@@ -44,9 +44,9 @@
         <h3 class="popup__title">Вход в аккаунт</h3>
         <form class="popup__form" name="login">
           <input type="text" name="group" id="input-group" class="popup__input popup__input_type_group" placeholder="Группа" required>
-          <span class="popup__error input-name-error"></span>
+          <span class="popup__error input-group-error"></span>
           <input type="text" name="token" id="input-token" class="popup__input popup__input_type_token" placeholder="Токен">
-          <span class="popup__error input-description-error"></span>
+          <span class="popup__error input-token-error"></span>
           <button type="submit" class="button popup__button">Войти</button>
         </form>
       </div>
@@ -57,7 +57,7 @@
         <h3 class="popup__title">Обновить аватар</h3>
         <form class="popup__form" name="edit-avatar">
           <input type="url" name="avatar" id="input-avatar-link" class="popup__input popup__input_type_avatar-link" placeholder="Ссылка на картинку" required>
-          <span class="popup__error input-name-error"></span>
+          <span class="popup__error input-avatar-link-error"></span>
           <button type="submit" class="button popup__button">Сохранить</button>
         </form>
       </div>

@@ -67,7 +67,7 @@ export const deleteCard = (id) => {
   })
   .then(res => {
     if(res.ok){
-      Promise.resolve(`Успешно: ${res.status}`);
+      return Promise.resolve(`Успешно: ${res.status}`);
     }
     return Promise.reject(`Ошибка: ${res.status}`);
   });
@@ -94,6 +94,22 @@ export const deleteLike = (id) => {
   .then(res => {
     if (res.ok) {
       return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  });
+}
+
+export const editAvatar = (avatar) => {
+  return fetch(`${config.baseUrl}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: config.headers,
+    body: JSON.stringify({
+      avatar: avatar
+    })
+  })
+  .then(res => {
+    if(res.ok){
+      return Promise.resolve(`Успешно: ${res.status}`);
     }
     return Promise.reject(`Ошибка: ${res.status}`);
   });

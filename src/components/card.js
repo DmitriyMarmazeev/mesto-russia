@@ -18,10 +18,6 @@ export function createCard(name, link, id, cardOwnerName, userName, likes = []) 
 	if(likes.some(liker => liker.name === userName)){
 		cardLikeButton.classList.add("card__like-button_is-active");
 	}
-	else{
-		console.log(likes);
-		console.log(userName);
-	}
 
 	cardLikeButton.addEventListener("click", evt => {
 		const likeButton = evt.target;
