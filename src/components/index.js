@@ -90,12 +90,13 @@ popupCloseButtons.forEach(closeButton => {
   closeButton.addEventListener("click", () => closeModal(closeButton.closest(".popup")));
 });
 
-Promise.resolve(
-	getInitialCards()
-).then(initialCards => {
+getInitialCards()
+.then(initialCards => {
 	initialCards.forEach(card => {
 		placesList.prepend(createCard(card.name, card.link, card.likes.length));
 	});
 })
+.catch(err => alert(err));
+
 
 export { cardTemplate, imagePopupElement, popupImage, popupCaption };
