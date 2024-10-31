@@ -1,7 +1,7 @@
 import { cardTemplate, imagePopupElement, popupImage, popupCaption } from "./index.js";
 import { openModal } from "./modal.js";
 
-export function createCard(name, link) {
+export function createCard(name, link, likes = []) {
 	const card = cardTemplate.cloneNode(true);
 	const cardImage = card.querySelector(".card__image");
 	const cardTitle = card.querySelector(".card__title");
@@ -12,7 +12,7 @@ export function createCard(name, link) {
 	cardTitle.textContent = name;
 	cardImage.src = link;
 	cardImage.alt = name;
-	cardLikeCount.textContent = 0;
+	cardLikeCount.textContent = likes.length;
 
 	cardLikeButton.addEventListener("click", evt => {
 		const likeButton = evt.target;
