@@ -5,7 +5,7 @@ import { openModal, closeModal } from "./modal.js";
 import * as api from './api.js';
 
 const cardTemplate = document.querySelector("#card-template").content;
-export const placesList = document.querySelector(".places__list");
+const placesList = document.querySelector(".places__list");
 const popups = document.querySelectorAll(".popup");
 const popupCloseButtons = document.querySelectorAll(".popup__close");
 
@@ -52,10 +52,11 @@ function handleProfileFormSubmit(evt) {
 	.then((user) => {
 		profileTitle.textContent = user.name;
 		profileDescription.textContent = user.about;
+		closeModal(profilePopup);
 	})
 	.catch(err => alert(err))
 	.finally(() => {
-		closeModal(profilePopup);
+		
 	});
 }
 
@@ -68,11 +69,15 @@ function openCardAddPopup() {
 function handleCardFormSubmit(evt) {
 	evt.preventDefault();
 
-  const name = cardPopupInputName.value;
-  const imageURL = cardPopupInputImageURL.value;
-	placesList.prepend(createCard(name, imageURL));
-
-	closeModal(cardPopup);
+	api.addCard(cardPopupInputName.value, cardPopupInputImageURL.value)
+	.then(card => {
+		placesList.prepend(createCard(card.name, card.link, card._id, card.owner.name, card.owner.name));
+		closeModal(cardPopup);
+	})
+	.catch(err => alert(err))
+	.finally(() => {
+		
+	});
 }
 
 profileEditButton.addEventListener("click", openProfilePopup);
@@ -95,20 +100,20 @@ popupCloseButtons.forEach(closeButton => {
   closeButton.addEventListener("click", () => closeModal(closeButton.closest(".popup")));
 });
 
-api.getUser()
-.then(user => {
-	profileTitle.textContent = user.name;
-	profileDescription.textContent = user.about;
-})
-.catch(err => alert(err));
-
 api.getInitialCards()
 .then(initialCards => {
-	initialCards.forEach(card => {
-		placesList.prepend(createCard(card.name, card.link, card.likes.length));
-	});
+	api.getUser()
+	.then(user => {
+		profileTitle.textContent = user.name;
+		profileDescription.textContent = user.about;
+
+		initialCards.forEach(card => {
+			placesList.append(createCard(card.name, card.link, card._id, card.owner.name, user.name, card.likes.length));
+		});
+	})
+	.catch(err => alert(err));
 })
 .catch(err => alert(err));
 
 
-export { cardTemplate, imagePopupElement, popupImage, popupCaption };
+export { cardTemplate, imagePopupElement, popupImage, popupCaption, profileTitle };

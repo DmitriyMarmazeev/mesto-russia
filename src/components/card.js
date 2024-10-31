@@ -1,7 +1,8 @@
 import { cardTemplate, imagePopupElement, popupImage, popupCaption } from "./index.js";
 import { openModal } from "./modal.js";
+import { deleteCard } from "./api.js";
 
-export function createCard(name, link, likes = 0) {
+export function createCard(name, link, id, cardOwnerName, userName, likes = 0) {
 	const card = cardTemplate.cloneNode(true);
 	const cardImage = card.querySelector(".card__image");
 	const cardTitle = card.querySelector(".card__title");
@@ -27,7 +28,18 @@ export function createCard(name, link, likes = 0) {
 		}
 	});
 
-	cardDeleteButton.addEventListener("click", evt => evt.target.closest(".card").remove());
+	if(cardOwnerName === userName){
+		cardDeleteButton.addEventListener("click", evt => {
+			deleteCard(id)
+			.then(() => {
+				evt.target.closest(".card").remove();
+			})
+			.catch(err => alert(err));
+		});
+	}
+	else{
+		cardDeleteButton.remove();
+	}
 
 	cardImage.addEventListener("click", () => {
 		popupImage.src = cardImage.src;

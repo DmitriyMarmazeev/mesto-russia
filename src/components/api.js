@@ -42,3 +42,55 @@ export const editProfile = (newName, newDescription) => {
   })
   .catch(res => Promise.reject(`Ошибка: ${res.status}`));;
 }
+
+export const addCard = (title, link) => {
+  return fetch(`${config.baseUrl}/cards`, {
+    method: 'POST',
+    headers: config.headers,
+    body: JSON.stringify({
+      name: title,
+      link: link
+    })
+  })
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    }
+  })
+  .catch(res => Promise.reject(`Ошибка: ${res.status}`));;
+}
+
+export const deleteCard = (id) => {
+  return fetch(`${config.baseUrl}/cards/${id}`, {
+    method: 'DELETE',
+    headers: config.headers
+  })
+  .then(res => Promise.resolve(`Успешно: ${res.status}`))
+  .catch(res => Promise.reject(`Ошибка: ${res.status}`));
+}
+
+export const putLike = (id) => {
+  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
+    method: 'PUT',
+    headers: config.headers
+  })
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    }
+  })
+  .catch(res => Promise.reject(`Ошибка: ${res.status}`));
+}
+
+export const deleteLike = (id) => {
+  return fetch(`${config.baseUrl}/cards/likes/${id}`, {
+    method: 'DELETE',
+    headers: config.headers
+  })
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    }
+  })
+  .catch(res => Promise.reject(`Ошибка: ${res.status}`));
+}
