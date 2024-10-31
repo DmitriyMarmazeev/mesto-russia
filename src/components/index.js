@@ -93,7 +93,6 @@ popupCloseButtons.forEach(closeButton => {
 Promise.resolve(
 	getInitialCards()
 ).then(initialCards => {
-	console.log(initialCards);
 	initialCards.forEach(card => {
 		placesList.prepend(createCard(card.name, card.link, card.likes.length));
 	});

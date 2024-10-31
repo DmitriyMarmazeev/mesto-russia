@@ -9,5 +9,5 @@ export const getInitialCards = () => {
         return res.json();
       }
     })
-    .catch(res => console.log("Error: " + res));
+    .catch(res => Promise.reject(`Ошибка: ${res.status}`));
 } 
