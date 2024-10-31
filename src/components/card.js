@@ -1,8 +1,8 @@
 import { cardTemplate, imagePopupElement, popupImage, popupCaption } from "./index.js";
 import { openModal } from "./modal.js";
-import { deleteCard } from "./api.js";
+import { deleteCard, putLike, deleteLike } from "./api.js";
 
-export function createCard(name, link, id, cardOwnerName, userName, likes = 0) {
+export function createCard(name, link, id, cardOwnerName, userName, likes = []) {
 	const card = cardTemplate.cloneNode(true);
 	const cardImage = card.querySelector(".card__image");
 	const cardTitle = card.querySelector(".card__title");
@@ -13,18 +13,34 @@ export function createCard(name, link, id, cardOwnerName, userName, likes = 0) {
 	cardTitle.textContent = name;
 	cardImage.src = link;
 	cardImage.alt = name;
-	cardLikeCount.textContent = likes;
+	cardLikeCount.textContent = likes.length;
+
+	if(likes.some(liker => liker.name === userName)){
+		cardLikeButton.classList.add("card__like-button_is-active");
+	}
+	else{
+		console.log(likes);
+		console.log(userName);
+	}
 
 	cardLikeButton.addEventListener("click", evt => {
 		const likeButton = evt.target;
-		const likeContainer = likeButton.closest(".card__like-container");
-		const likeCount = likeContainer.querySelector(".card__like-count");
-		likeButton.classList.toggle("card__like-button_is-active");
+		const likeCount = likeButton.nextElementSibling;
 		if(likeButton.classList.contains("card__like-button_is-active")){
-			likeCount.textContent = Number.parseInt(likeCount.textContent) + 1;
+			deleteLike(id)
+			.then(card => {
+				likeCount.textContent = card.likes.length;
+				likeButton.classList.remove("card__like-button_is-active");
+			})
+			.catch(err => alert(err));
 		}
 		else{
-			likeCount.textContent = Number.parseInt(likeCount.textContent) - 1;
+			putLike(id)
+			.then(card => {
+				likeCount.textContent = card.likes.length;
+				likeButton.classList.add("card__like-button_is-active");
+			})
+			.catch(err => alert(err));
 		}
 	});
 

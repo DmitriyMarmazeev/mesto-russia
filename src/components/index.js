@@ -108,7 +108,7 @@ api.getInitialCards()
 		profileDescription.textContent = user.about;
 
 		initialCards.forEach(card => {
-			placesList.append(createCard(card.name, card.link, card._id, card.owner.name, user.name, card.likes.length));
+			placesList.append(createCard(card.name, card.link, card._id, card.owner.name, user.name, card.likes));
 		});
 	})
 	.catch(err => alert(err));
