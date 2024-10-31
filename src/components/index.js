@@ -47,6 +47,7 @@ function openProfilePopup() {
 
 function handleProfileFormSubmit(evt) {
 	evt.preventDefault();
+	evt.target.textContent = "Сохранение...";
 
 	api.editProfile(nameInput.value, descriptionInput.value)
 	.then((user) => {
@@ -56,7 +57,7 @@ function handleProfileFormSubmit(evt) {
 	})
 	.catch(err => alert(err))
 	.finally(() => {
-		
+		evt.target.textContent = "Сохранить";
 	});
 }
 
@@ -68,6 +69,7 @@ function openCardAddPopup() {
 
 function handleCardFormSubmit(evt) {
 	evt.preventDefault();
+	evt.target.textContent = "Сохранение...";
 
 	api.addCard(cardPopupInputName.value, cardPopupInputImageURL.value)
 	.then(card => {
@@ -76,7 +78,7 @@ function handleCardFormSubmit(evt) {
 	})
 	.catch(err => alert(err))
 	.finally(() => {
-		
+		evt.target.textContent = "Сохранить";
 	});
 }
 
