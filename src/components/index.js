@@ -2,7 +2,7 @@ import '../pages/index.css';
 import { enableValidation } from "./validation.js";
 import { createCard } from "./card.js";
 import { openModal, closeModal } from "./modal.js";
-import { getInitialCards } from './api.js';
+import * as api from './api.js';
 
 const cardTemplate = document.querySelector("#card-template").content;
 export const placesList = document.querySelector(".places__list");
@@ -48,10 +48,15 @@ function openProfilePopup() {
 function handleProfileFormSubmit(evt) {
 	evt.preventDefault();
 
-	profileTitle.textContent = nameInput.value;
-	profileDescription.textContent = descriptionInput.value;
-
-	closeModal(profilePopup);
+	api.editProfile(nameInput.value, descriptionInput.value)
+	.then((user) => {
+		profileTitle.textContent = user.name;
+		profileDescription.textContent = user.about;
+	})
+	.catch(err => alert(err))
+	.finally(() => {
+		closeModal(profilePopup);
+	});
 }
 
 function openCardAddPopup() {
@@ -90,7 +95,14 @@ popupCloseButtons.forEach(closeButton => {
   closeButton.addEventListener("click", () => closeModal(closeButton.closest(".popup")));
 });
 
-getInitialCards()
+api.getUser()
+.then(user => {
+	profileTitle.textContent = user.name;
+	profileDescription.textContent = user.about;
+})
+.catch(err => alert(err));
+
+api.getInitialCards()
 .then(initialCards => {
 	initialCards.forEach(card => {
 		placesList.prepend(createCard(card.name, card.link, card.likes.length));
