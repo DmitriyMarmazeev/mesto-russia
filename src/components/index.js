@@ -13,6 +13,7 @@ const loginPopup = document.querySelector(".popup_type_login");
 const loginForm = loginPopup.querySelector(".popup__form");
 const groupURLInput = loginPopup.querySelector(".popup__input_type_group");
 const tokenInput = loginPopup.querySelector(".popup__input_type_token");
+const buttonLogin = loginPopup.querySelector(".button__login");
 
 const profileImage = document.querySelector(".profile__image");
 const avatarPopup = document.querySelector(".popup_type_avatar");
@@ -48,6 +49,18 @@ const validationSettings = {
 
 enableValidation(validationSettings);
 
+function getSavedCredentials() {
+	const token = localStorage.getItem('token');
+	const group = localStorage.getItem('group');
+	return { token, group };
+}
+
+function saveCredentials(token, group) {
+	localStorage.setItem('token', token);
+	localStorage.setItem('group', group);
+}
+
+
 function loadPage() {
 	Promise.all([api.getInitialCards(), api.getUser()])
 		.then(([initialCards, user]) => {
@@ -62,13 +75,10 @@ function loadPage() {
 		.catch(err => alert(err));
 }
 
-function handleLoginFormSubmit(evt) {
-	evt.preventDefault();
-	const popupButton = evt.target.querySelector(".popup__button");
-	popupButton.textContent = "Выполняется вход...";
-
-	api.login(groupURLInput.value, tokenInput.value)
+function login(group, token) {
+	api.login(group, token)
 	.then(() => {
+		saveCredentials(token, group);
 		loadPage();
 	})
 	.catch(err => {
@@ -77,8 +87,15 @@ function handleLoginFormSubmit(evt) {
 		alert(err);
 	})
 	.finally(() => {
-		popupButton.textContent = "Войти";
+		buttonLogin.textContent = "Войти";
 	});
+}
+
+function handleLoginFormSubmit(evt) {
+	evt.preventDefault();
+	buttonLogin.textContent = "Выполняется вход...";
+
+	login(groupURLInput.value, tokenInput.value);
 }
 
 function openAvatarPopup() {
@@ -172,6 +189,19 @@ popups.forEach((popup) => {
 
 popupCloseButtons.forEach(closeButton => {
   closeButton.addEventListener("click", () => closeModal(closeButton.closest(".popup")));
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+	const { token, group } = getSavedCredentials();
+
+	if (token && group) {
+		loginForm.removeEventListener("submit", handleLoginFormSubmit);
+		groupURLInput.value = group;
+		tokenInput.value = token;
+		buttonLogin.classList.remove(validationSettings.inactiveButtonClass);
+		buttonLogin.textContent = "Выполняется вход...";
+		login(group, token);
+	}
 });
 
 export { cardTemplate, imagePopupElement, popupImage, popupCaption, profileTitle, loginPopup };
