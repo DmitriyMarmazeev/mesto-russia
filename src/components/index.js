@@ -94,8 +94,8 @@ function handleAvatarFormSubmit(evt) {
 	popupButton.textContent = "Сохранение...";
 
 	api.editAvatar(avatarLink)
-	.then(() => {
-		profileImage.style.backgroundImage = `url(${avatarLink})`;
+	.then((user) => {
+		profileImage.style.backgroundImage = `url(${user.avatar})`;
 		closeModal(avatarPopup);
 	})
 	.catch(err => alert(err))
@@ -162,7 +162,7 @@ popups.forEach((popup) => {
 	popup.classList.add("popup_is-animated");
 
 	if(popup !== loginPopup) {
-		popup.addEventListener("click", (evt) => {
+		popup.addEventListener("mousedown", (evt) => {
 			if (!evt.target.closest(".popup__content")) {
 				closeModal(popup);
 			}
