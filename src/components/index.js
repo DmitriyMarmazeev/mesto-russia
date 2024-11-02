@@ -73,7 +73,7 @@ function loadPage() {
 			});
 			closeModal(loginPopup);
 		})
-		.catch(err => alert(err));
+		.catch(err => console.log(err));
 }
 
 function login(group, token) {
@@ -85,7 +85,7 @@ function login(group, token) {
 	.catch(err => {
 		groupURLInput.value = "";
 		tokenInput.value = "";
-		alert(err);
+		console.log(err);
 	})
 	.finally(() => {
 		buttonLogin.textContent = "Войти";
@@ -122,7 +122,7 @@ function handleAvatarFormSubmit(evt) {
 		profileImage.style.backgroundImage = `url(${user.avatar})`;
 		closeModal(avatarPopup);
 	})
-	.catch(err => alert(err))
+	.catch(err => console.log(err))
 	.finally(() => {
 		popupButton.textContent = "Сохранить";
 	});
@@ -146,7 +146,7 @@ function handleProfileFormSubmit(evt) {
 		profileDescription.textContent = user.about;
 		closeModal(profilePopup);
 	})
-	.catch(err => alert(err))
+	.catch(err => console.log(err))
 	.finally(() => {
 		popupButton.textContent = "Сохранить";
 	});
@@ -168,7 +168,7 @@ function handleCardFormSubmit(evt) {
 		placesList.prepend(createCard(card.name, card.link, card._id, card.owner.name, card.owner.name));
 		closeModal(cardPopup);
 	})
-	.catch(err => alert(err))
+	.catch(err => console.log(err))
 	.finally(() => {
 		popupButton.textContent = "Создать";
 	});
