@@ -14,6 +14,7 @@ const loginForm = loginPopup.querySelector(".popup__form");
 const groupURLInput = loginPopup.querySelector(".popup__input_type_group");
 const tokenInput = loginPopup.querySelector(".popup__input_type_token");
 const buttonLogin = loginPopup.querySelector(".button__login");
+const buttonLogout = document.querySelector(".header__logout-button");
 
 const profileImage = document.querySelector(".profile__image");
 const avatarPopup = document.querySelector(".popup_type_avatar");
@@ -89,6 +90,12 @@ function login(group, token) {
 	.finally(() => {
 		buttonLogin.textContent = "Войти";
 	});
+}
+
+function logout() {
+	localStorage.removeItem('token');
+	localStorage.removeItem('group');
+	location.reload();
 }
 
 function handleLoginFormSubmit(evt) {
@@ -174,6 +181,8 @@ profileFormElement.addEventListener("submit", handleProfileFormSubmit);
 cardAddButton.addEventListener("click", openCardAddPopup);
 cardFormElement.addEventListener("submit", handleCardFormSubmit);
 loginForm.addEventListener("submit", handleLoginFormSubmit);
+
+buttonLogout.addEventListener("click", logout);
 
 popups.forEach((popup) => {
 	popup.classList.add("popup_is-animated");
