@@ -4,6 +4,8 @@
 .page__section{box-sizing:border-box;margin:0 auto;max-width:882px;position:relative;width:100%}@media screen and (max-width:1140px){.page__section{width:calc(100% - 40px)}}
 .page{background:#000}
 .header__logo{height:33px;-o-object-fit:contain;object-fit:contain;width:142px}@media screen and (max-width:480px){.header__logo{height:24px;margin:0 0 0 7px;width:104px}}
+.header__logout-button{background-color:transparent;border:1px solid #fff;cursor:pointer;height:60px;margin:0 0 0 auto;padding:7px;width:60px}@media screen and (max-width:480px){.header__logout-button{height:42px;margin-right:7px;width:42px}}
+.header__logout-image{background:transparent url(cfbe8688c8ba50e5ccd3.svg) 50% no-repeat;height:100%;outline:none;width:100%}
 .header{align-items:center;display:flex;flex-shrink:0;font-family:Inter,Arial,sans-serif;min-height:120px}.header:before{background:#545454;bottom:0;content:"";height:1px;left:50%;opacity:.7;position:absolute;transform:translateX(-50%);width:100%}@media screen and (max-width:480px){.header{min-height:85px}.header:before{width:calc(100% + 40px)}}
 .content{flex-grow:1;flex-shrink:0}
 .footer__copyright{color:#545454;font-size:18px;line-height:22px;margin:0}@media screen and (max-width:568px){.footer__copyright{font-size:14px;line-height:17px}}
