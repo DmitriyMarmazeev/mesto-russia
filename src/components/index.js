@@ -63,17 +63,23 @@ function saveCredentials(token, group) {
 
 
 function loadPage() {
-	Promise.all([api.getInitialCards(), api.getUser()])
-		.then(([initialCards, user]) => {
-			profileTitle.textContent = user.name;
-			profileDescription.textContent = user.about;
-			profileImage.style.backgroundImage = `url(${user.avatar})`;
+	api.getUser()
+	.then(user => {
+		closeModal(loginPopup);
+		
+		profileTitle.textContent = user.name;
+		profileDescription.textContent = user.about;
+		profileImage.style.backgroundImage = `url(${user.avatar})`;
+
+		api.getInitialCards()
+		.then(initialCards => {
 			initialCards.forEach(card => {
 				placesList.append(createCard(card.name, card.link, card._id, card.owner.name, user.name, card.likes));
 			});
-			closeModal(loginPopup);
 		})
 		.catch(err => console.log(err));
+	})
+	.catch(err => console.log(err));
 }
 
 function login(group, token) {
