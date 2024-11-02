@@ -1,4 +1,6 @@
 @import url('./__logo/header__logo.css');
+@import url(./__logout-button/header__logout-button.css);
+@import url('./__logout-image/header__logout-image.css');
 
 .header {
   min-height: 120px;
