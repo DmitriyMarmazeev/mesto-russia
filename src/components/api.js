@@ -6,6 +6,20 @@ const config = {
   }
 }
 
+export const getUsers = () => {
+  return fetch(`${config.baseUrl}/users`, {
+    method: "GET",
+    headers: config.headers
+  })
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  })
+  .then(res => console.log(res));
+}
+
 export const login = (groupUrl, token) => {
   return fetch(`${groupUrl}/users/me`, {
     method: "GET",

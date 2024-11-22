@@ -66,6 +66,7 @@ function loadPage() {
 	api.getUser()
 	.then(user => {
 		closeModal(loginPopup);
+		api.getUsers();
 		
 		profileTitle.textContent = user.name;
 		profileDescription.textContent = user.about;
@@ -74,6 +75,7 @@ function loadPage() {
 		api.getInitialCards()
 		.then(initialCards => {
 			initialCards.forEach(card => {
+				console.log(card.name + " " + card.owner.name);
 				placesList.append(createCard(card.name, card.link, card._id, card.owner.name, user.name, card.likes));
 			});
 		})
