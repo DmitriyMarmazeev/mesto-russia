@@ -12,15 +12,22 @@
 <body class="page">
   <div class="page__content">
     <header class="header page__section">
-      <img src="<%=require('./images/logo.svg')%>" alt="Логотип проекта масто" class="logo header__logo">
+      <img src="<%=require('./images/logo.svg')%>" alt="Логотип проекта место" class="logo header__logo">
+      <button class="header__logout-button">
+        <img src="<%=require('./images/logout.svg')%>" alt="Выйти" class="header__logout-image"></img>
+      </button>
     </header>
     <main class="content">
       <section class="profile page__section">
-        <div class="profile__image"></div>
+        <button class="profile__image">
+          <div class="profile__image-edit-background">
+            <img class="profile__image-edit-icon" src="<%=require('./images/edit-icon.svg')%>" alt="Редактировать">
+          </div>
+        </button>
         <div class="profile__info">
-          <h1 class="profile__title">Жак-Ив Кусто</h1>
+          <h1 class="profile__title"></h1>
           <button class="profile__edit-button" type="button"></button>
-          <p class="profile__description">Исследователь океана</p>
+          <p class="profile__description"></p>
         </div>
         <button class="profile__add-button" type="button"></button>
       </section>
@@ -34,6 +41,29 @@
         © 2024 Mesto Russia
       </p>
     </footer>
+    <div class="popup popup_type_login popup_is-opened">
+      <div class="popup__content">
+        <h3 class="popup__title">Вход в аккаунт</h3>
+        <form class="popup__form" name="login">
+          <input type="text" name="group" id="input-group" class="popup__input popup__input_type_group" placeholder="Ссылка на группу" required>
+          <span class="popup__error input-group-error"></span>
+          <input type="text" name="token" id="input-token" class="popup__input popup__input_type_token" placeholder="Токен" required>
+          <span class="popup__error input-token-error"></span>
+          <button type="submit" class="button popup__button button__login">Войти</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup_type_avatar">
+      <div class="popup__content">
+        <button type="button" class="popup__close"></button>
+        <h3 class="popup__title">Обновить аватар</h3>
+        <form class="popup__form" name="edit-avatar">
+          <input type="url" name="avatar" id="input-avatar-link" class="popup__input popup__input_type_avatar-link" placeholder="Ссылка на картинку" required>
+          <span class="popup__error input-avatar-link-error"></span>
+          <button type="submit" class="button popup__button">Сохранить</button>
+        </form>
+      </div>
+    </div>
     <div class="popup popup_type_edit">
       <div class="popup__content">
         <button type="button" class="popup__close"></button>
@@ -74,9 +104,11 @@
       <img class="card__image" src="" alt="" />
       <button type="button" class="card__delete-button"></button>
       <div class="card__description">
-        <h2 class="card__title">
-        </h2>
-        <button type="button" class="card__like-button"></button>
+        <h2 class="card__title"></h2>
+        <div class="card__like-container">
+          <button type="button" class="card__like-button"></button>
+          <span class="card__like-count"></span>
+        </div>
       </div>
     </li>
   </template>
